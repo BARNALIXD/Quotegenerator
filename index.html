@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUOTE OF THE DAY</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quote-box">
+        <h2>Quote Of The Day</h2>
+        <blockquote id="quote">Loading....</blockquote>
+        <span id="author">Loading....</span>
+        <div>
+            <button id="new-quote">New Quote</button>
+            <button id="tweet-quote" onclick=" tweet()"><i class="ri-twitter-x-fill"></i> Tweet</button>
+        </div>
+    </div>
+    <script>
+        const quote = document.getElementById("quote");
+        const author = document.getElementById("author");
+        const newQuoteButton = document.getElementById("new-quote");
+        const api_url = "https://api.quotable.io/random";
+
+        async function getQuote(url) {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                quote.innerHTML = data.content;
+                author.innerHTML = data.author;
+            } catch (error) {
+                quote.innerHTML = "An error occurred. Please try again.";
+                author.innerHTML = "";
+                console.error("Error fetching the quote:", error);
+            }
+        }
+
+        // Fetch a new quote when the "New Quote" button is clicked
+        newQuoteButton.addEventListener("click", () => {
+            getQuote(api_url);
+        });
+
+        // Fetch the initial quote
+        getQuote(api_url);
+
+        function tweet(){
+            window.open("https://twitter.com/intent/tweet?text=Hello%20world","Tweet Window" , "width =600 , height = 300")
+        }
+    </script>
+</body>
+</html>
